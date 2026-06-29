@@ -9,7 +9,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  /* ===================== DESIGN TOKENS ===================== */
   :root{
     --void:        #0c0518;
     --void-deep:    #050209;
@@ -55,7 +54,6 @@
     *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
   }
 
-  /* ===================== NEBULA BACKGROUND ===================== */
   .nebula-bg{
     position:fixed; inset:0; z-index:-2; overflow:hidden;
     background:
@@ -83,7 +81,6 @@
   }
   @keyframes drift{ from{ transform:translate(0,0); } to{ transform:translate(-200px,-160px); } }
 
-  /* ===================== LAYOUT SHELL ===================== */
   .wrap{
     position:relative; z-index:1;
     max-width:560px; margin:0 auto;
@@ -92,14 +89,11 @@
     display:flex; flex-direction:column;
   }
 
-  /* ===================== HEADER ===================== */
   header.site{
     display:flex; align-items:center; justify-content:center;
     gap:10px; padding: 6px 0 18px;
   }
-  .logo-mark{
-    width:38px; height:38px; flex:0 0 auto;
-  }
+  .logo-mark{ width:38px; height:38px; flex:0 0 auto; }
   .logo-text{
     font-family:var(--font-display); font-weight:800;
     font-size:clamp(20px,5.4vw,26px);
@@ -113,7 +107,6 @@
     color: var(--ink-faint); margin-top:-14px; margin-bottom:14px;
   }
 
-  /* ===================== HERO ===================== */
   .hero{ text-align:center; padding: 4px 6px 22px; }
   .eyebrow{
     display:inline-flex; align-items:center; gap:6px;
@@ -124,7 +117,7 @@
     padding:6px 14px; border-radius:999px;
     margin-bottom:14px;
   }
-  .eyebrow::before{ content:"●"; font-size:8px; color: var(--ok); animation: pulse 1.8s ease-in-out infinite; }
+  .eyebrow::before{ content:"\25CF"; font-size:8px; color: var(--ok); animation: pulse 1.8s ease-in-out infinite; }
   @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.3; } }
   .hero h1{
     font-size: clamp(28px, 7.4vw, 38px);
@@ -137,7 +130,6 @@
     max-width:380px; margin-inline:auto;
   }
 
-  /* ===================== CARD ===================== */
   .card{
     background: linear-gradient(160deg, rgba(91,31,184,0.22), rgba(12,5,24,0.6));
     border:1px solid rgba(255,255,255,0.08);
@@ -147,7 +139,6 @@
     box-shadow: 0 20px 60px rgba(0,0,0,0.45);
   }
 
-  /* ===================== FORM ===================== */
   .field{ margin-bottom:16px; }
   .field label{
     display:block; font-size:12.5px; font-weight:600; letter-spacing:.6px;
@@ -166,9 +157,7 @@
     outline:none; border-color: var(--nova-yellow);
     box-shadow: 0 0 0 4px rgba(255,203,46,0.14);
   }
-  .field .err{
-    display:none; color: var(--danger); font-size:12.5px; margin-top:6px; font-weight:500;
-  }
+  .field .err{ display:none; color: var(--danger); font-size:12.5px; margin-top:6px; font-weight:500; }
   .field.invalid input{ border-color: var(--danger); }
   .field.invalid .err{ display:block; }
 
@@ -185,38 +174,52 @@
     box-shadow: var(--shadow-glow-yellow);
   }
   .btn-primary:disabled{ opacity:.45; cursor:not-allowed; box-shadow:none; }
-  .btn-ghost{
-    background: transparent; color: var(--ink-dim);
-    border:1.5px solid rgba(255,255,255,0.15);
-  }
-  .fine-print{
-    margin-top:14px; font-size:11.5px; color: var(--ink-faint); text-align:center; line-height:1.5;
-  }
+  .btn-ghost{ background: transparent; color: var(--ink-dim); border:1.5px solid rgba(255,255,255,0.15); }
+  .fine-print{ margin-top:14px; font-size:11.5px; color: var(--ink-faint); text-align:center; line-height:1.5; }
 
-  /* ===================== STEP SWITCHING ===================== */
   .step{ display:none; }
   .step.active{ display:block; animation: fadeUp .4s ease both; }
   @keyframes fadeUp{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:translateY(0); } }
 
-  /* ===================== WHEEL ===================== */
+  /* ===================== WHEEL (bigger + more alive) ===================== */
   .wheel-stage{
-    position:relative; width:min(78vw, 320px); aspect-ratio:1/1; margin: 6px auto 22px;
+    position:relative; width:min(88vw, 380px); aspect-ratio:1/1; margin: 6px auto 18px;
+  }
+  .wheel-stage.spinning .wheel-glow{ animation: glowPulseFast 0.6s ease-in-out infinite; }
+  .sound-toggle{
+    position:absolute; top:2px; right:2px; z-index:4;
+    width:34px; height:34px; border-radius:50%;
+    background: rgba(5,2,9,0.55); border:1px solid rgba(255,255,255,0.18);
+    color: var(--ink-dim); font-size:15px;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
   }
   .wheel-glow{
-    position:absolute; inset:-14%;
-    background: radial-gradient(circle, rgba(255,203,46,0.35), rgba(139,63,224,0.25) 55%, transparent 75%);
-    filter: blur(18px);
+    position:absolute; inset:-16%;
+    background: radial-gradient(circle, rgba(255,203,46,0.38), rgba(139,63,224,0.28) 55%, transparent 75%);
+    filter: blur(20px);
     z-index:0;
     animation: glowPulse 3.4s ease-in-out infinite;
   }
   @keyframes glowPulse{ 0%,100%{ opacity:.7; } 50%{ opacity:1; } }
+  @keyframes glowPulseFast{ 0%,100%{ opacity:.6; transform:scale(1); } 50%{ opacity:1; transform:scale(1.06); } }
   .wheel-pointer{
-    position:absolute; top:-4%; left:50%; transform:translateX(-50%);
+    position:absolute; top:-5%; left:50%; transform:translateX(-50%);
     width:0; height:0; z-index:3;
-    border-left:14px solid transparent;
-    border-right:14px solid transparent;
-    border-top:24px solid var(--nova-yellow);
+    border-left:16px solid transparent;
+    border-right:16px solid transparent;
+    border-top:28px solid var(--nova-yellow);
     filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+    transition: transform .15s ease;
+    transform-origin: 50% 0%;
+  }
+  .wheel-pointer.bounce{ animation: pointerBounce .6s ease; }
+  @keyframes pointerBounce{
+    0%{ transform: translateX(-50%) rotate(0deg); }
+    25%{ transform: translateX(-50%) rotate(-18deg); }
+    50%{ transform: translateX(-50%) rotate(12deg); }
+    75%{ transform: translateX(-50%) rotate(-6deg); }
+    100%{ transform: translateX(-50%) rotate(0deg); }
   }
   .wheel-ring{
     position:absolute; inset:0; border-radius:50%; z-index:1;
@@ -224,50 +227,39 @@
     padding:10px;
     box-shadow: 0 0 0 4px rgba(255,255,255,0.06), 0 25px 50px rgba(0,0,0,0.55);
   }
-  .wheel-inner-frame{
-    width:100%; height:100%; border-radius:50%;
-    background: var(--void-deep);
-    padding:6px;
-  }
+  .wheel-inner-frame{ width:100%; height:100%; border-radius:50%; background: var(--void-deep); padding:6px; }
   #wheel{
     width:100%; height:100%; border-radius:50%; display:block;
-    transition: transform 4.2s cubic-bezier(.17,.89,.32,1.1);
     transform: rotate(0deg);
   }
   .wheel-hub{
     position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-    width:18%; height:18%; border-radius:50%; z-index:3;
+    width:16%; height:16%; border-radius:50%; z-index:3;
     background: radial-gradient(circle at 35% 30%, var(--nova-yellow-soft), var(--nova-yellow-deep) 70%);
     box-shadow: 0 0 0 4px var(--void-deep), 0 4px 14px rgba(0,0,0,0.5);
   }
-  .spin-status{
-    text-align:center; font-size:13px; color: var(--ink-faint); margin-bottom:14px;
-    min-height:18px;
-  }
-  .countdown-box{
-    text-align:center; padding:18px 12px;
-  }
+  .spin-status{ text-align:center; font-size:13px; color: var(--ink-faint); margin-bottom:14px; min-height:18px; }
+  .countdown-box{ text-align:center; padding:18px 12px; }
   .countdown-box h3{ font-size:17px; margin-bottom:6px; }
   .countdown-box p{ color: var(--ink-dim); font-size:13.5px; margin-bottom:14px; }
   .countdown-timer{
     font-family: var(--font-display); font-size:30px; font-weight:700;
     letter-spacing:2px; color: var(--nova-yellow);
-    background: rgba(255,203,46,0.08);
-    border:1px solid rgba(255,203,46,0.25);
-    border-radius: var(--radius-md);
-    padding:12px 0; margin-bottom:6px;
+    background: rgba(255,203,46,0.08); border:1px solid rgba(255,203,46,0.25);
+    border-radius: var(--radius-md); padding:12px 0; margin-bottom:6px;
   }
 
-  /* ===================== MODAL ===================== */
   .modal-overlay{
     position:fixed; inset:0; z-index:50;
     background: rgba(5,2,9,0.78);
     display:none; align-items:center; justify-content:center;
     padding:20px; backdrop-filter: blur(4px);
+    overflow:hidden;
   }
   .modal-overlay.show{ display:flex; animation: fadeIn .25s ease; }
   @keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
   .modal-card{
+    position:relative;
     width:100%; max-width:380px;
     background: linear-gradient(165deg, rgba(91,31,184,0.5), var(--void-deep) 70%);
     border:1px solid rgba(255,203,46,0.35);
@@ -275,47 +267,34 @@
     padding: 30px 24px 26px;
     text-align:center;
     box-shadow: 0 30px 80px rgba(0,0,0,0.6), var(--shadow-glow-purple);
-    max-height:90vh; overflow-y:auto;
+    max-height:90vh; overflow-y:auto; overflow-x:hidden;
     animation: popIn .35s cubic-bezier(.2,.9,.3,1.3);
   }
   @keyframes popIn{ from{ transform:scale(.85); opacity:0; } to{ transform:scale(1); opacity:1; } }
-  .modal-card .confetti-emoji{ font-size:36px; margin-bottom:6px; }
-  .modal-card .prize-label{
-    font-size:11.5px; letter-spacing:2px; text-transform:uppercase; color: var(--ink-faint);
-    margin-bottom:8px;
-  }
+  .modal-card .confetti-emoji{ font-size:38px; margin-bottom:6px; }
+  .modal-card .prize-label{ font-size:11.5px; letter-spacing:2px; text-transform:uppercase; color: var(--ink-faint); margin-bottom:8px; }
   .modal-card .prize-value{
     font-family:var(--font-display); font-weight:800;
-    font-size: clamp(24px,7vw,30px);
-    color: var(--nova-yellow);
-    margin-bottom:18px;
-    line-height:1.2;
+    font-size: clamp(24px,7vw,30px); color: var(--nova-yellow);
+    margin-bottom:18px; line-height:1.2;
   }
   .modal-card.try-again .prize-value{ color: var(--ink); }
+
+  .confetti-piece{ position:absolute; top:-10px; border-radius:2px; opacity:.95; pointer-events:none; }
 
   .code-block{
     background: rgba(0,0,0,0.35);
     border:1.5px dashed rgba(255,203,46,0.5);
-    border-radius: var(--radius-sm);
-    padding:14px;
-    margin-bottom:14px;
+    border-radius: var(--radius-sm); padding:14px; margin-bottom:14px;
   }
   .code-block .code-label{ font-size:11px; color: var(--ink-faint); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:6px; }
   .code-block .code-value{
     font-family: var(--font-display); font-weight:700; font-size:19px;
     letter-spacing:1.5px; color: var(--ink); word-break:break-all;
   }
-  .timestamp-line{
-    font-size:12px; color: var(--ink-faint); margin-bottom:18px;
-  }
-  .claim-steps{
-    text-align:left; background: rgba(255,255,255,0.04);
-    border-radius: var(--radius-sm); padding:14px 16px; margin-bottom:18px;
-  }
-  .claim-steps .ct-title{
-    font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:1px;
-    color: var(--nova-yellow); margin-bottom:10px;
-  }
+  .timestamp-line{ font-size:12px; color: var(--ink-faint); margin-bottom:18px; }
+  .claim-steps{ text-align:left; background: rgba(255,255,255,0.04); border-radius: var(--radius-sm); padding:14px 16px; margin-bottom:18px; }
+  .claim-steps .ct-title{ font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color: var(--nova-yellow); margin-bottom:10px; }
   .claim-steps ol{ margin:0; padding-left:18px; color: var(--ink-dim); font-size:13.5px; }
   .claim-steps li{ margin-bottom:6px; }
   .claim-steps li:last-child{ margin-bottom:0; }
@@ -324,20 +303,12 @@
     width:100%; margin-bottom:10px;
     background: rgba(255,255,255,0.07); color: var(--ink);
     border:1px solid rgba(255,255,255,0.15);
-    border-radius:999px; padding:12px; font-size:14px; font-weight:600;
-    cursor:pointer;
+    border-radius:999px; padding:12px; font-size:14px; font-weight:600; cursor:pointer;
   }
   .copy-btn.copied{ background: rgba(75,227,160,0.18); border-color: var(--ok); color: var(--ok); }
 
-  /* ===================== FOOTER / DISCLAIMER ===================== */
-  footer.legal{
-    margin-top:auto;
-    padding: 34px 6px 28px;
-    font-size:12px; color: var(--ink-faint); line-height:1.7;
-  }
-  .legal-badges{
-    display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:20px;
-  }
+  footer.legal{ margin-top:auto; padding: 34px 6px 28px; font-size:12px; color: var(--ink-faint); line-height:1.7; }
+  .legal-badges{ display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
   .badge{
     display:inline-flex; align-items:center; gap:6px;
     font-size:11px; font-weight:700; letter-spacing:.5px;
@@ -346,19 +317,14 @@
   }
   .badge.warn{ border-color: rgba(255,107,107,0.4); color: var(--danger); }
 
-  .legal details{
-    border-top:1px solid rgba(255,255,255,0.08);
-    padding:14px 2px;
-  }
-  .legal details:first-of-type{ border-top:1px solid rgba(255,255,255,0.08); }
+  .legal details{ border-top:1px solid rgba(255,255,255,0.08); padding:14px 2px; }
   .legal summary{
-    cursor:pointer; font-weight:600; color: var(--ink-dim);
-    font-size:13px; letter-spacing:.3px;
+    cursor:pointer; font-weight:600; color: var(--ink-dim); font-size:13px; letter-spacing:.3px;
     list-style:none; display:flex; justify-content:space-between; align-items:center;
   }
   .legal summary::-webkit-details-marker{ display:none; }
   .legal summary::after{ content:"+"; font-size:18px; color: var(--ink-faint); }
-  .legal details[open] summary::after{ content:"–"; }
+  .legal details[open] summary::after{ content:"\2013"; }
   .legal details p, .legal details ul{ margin-top:10px; }
   .legal ul{ padding-left:18px; }
   .legal li{ margin-bottom:6px; }
@@ -366,18 +332,18 @@
   .brand-foot{ text-align:center; margin-top:24px; color: var(--ink-faint); font-size:11.5px; }
   .brand-foot strong{ color: var(--ink-dim); }
 
-  /* ===================== RESPONSIVE / DESKTOP ===================== */
   @media (min-width: 760px){
     .wrap{ max-width:640px; padding-top:36px; }
     .card{ padding:36px 40px; }
-    .wheel-stage{ width:300px; }
+    .wheel-stage{ width:420px; }
   }
   @media (min-width: 1024px){
     .wrap{ max-width:680px; }
+    .wheel-stage{ width:440px; }
   }
   @media (max-width: 360px){
     .card{ padding:20px 16px; }
-    .wheel-stage{ width:84vw; }
+    .wheel-stage{ width:90vw; }
   }
 </style>
 </head>
@@ -408,31 +374,30 @@
 
     <div class="card">
 
-      <!-- STEP 1: ENTRY FORM -->
       <section class="step active" id="step-form">
         <form id="entryForm" novalidate>
           <div class="field" id="field-username">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" placeholder="Your casino username" autocomplete="username" maxlength="40">
-            <p class="err">Enter the username you play with (2–40 characters).</p>
+            <p class="err">Enter the username you play with (2-40 characters).</p>
           </div>
           <div class="field" id="field-mobile">
             <label for="mobile">Mobile number</label>
             <input type="tel" id="mobile" name="mobile" placeholder="e.g. +1 555 123 4567" autocomplete="tel" maxlength="20">
-            <p class="err">Enter a valid mobile number (7–15 digits).</p>
+            <p class="err">Enter a valid mobile number (7-15 digits).</p>
           </div>
           <button type="submit" class="btn btn-primary" id="continueBtn">Continue to Spin Wheel</button>
           <p class="fine-print">By continuing you confirm you are 21+ and agree to the terms below.</p>
         </form>
       </section>
 
-      <!-- STEP 2: WHEEL -->
       <section class="step" id="step-wheel">
-        <p class="spin-status" id="spinStatus">Good luck, <span id="helloName">player</span> — tap the wheel to spin!</p>
+        <p class="spin-status" id="spinStatus">Good luck, <span id="helloName">player</span> &mdash; tap the wheel to spin!</p>
 
-        <div class="wheel-stage">
+        <div class="wheel-stage" id="wheelStage">
+          <button type="button" class="sound-toggle" id="soundToggle" aria-label="Toggle sound">🔊</button>
           <div class="wheel-glow" aria-hidden="true"></div>
-          <div class="wheel-pointer" aria-hidden="true"></div>
+          <div class="wheel-pointer" id="wheelPointer" aria-hidden="true"></div>
           <div class="wheel-ring">
             <div class="wheel-inner-frame">
               <svg id="wheel" viewBox="0 0 300 300" role="img" aria-label="Prize wheel"></svg>
@@ -444,7 +409,6 @@
         <button type="button" class="btn btn-primary" id="spinBtn">SPIN THE WHEEL</button>
       </section>
 
-      <!-- STEP 3: COOLDOWN -->
       <section class="step" id="step-cooldown">
         <div class="countdown-box">
           <h3>You've already taken today's spin 🚀</h3>
@@ -456,7 +420,6 @@
     </div>
   </main>
 
-  <!-- ===================== RESULT MODAL ===================== -->
   <div class="modal-overlay" id="resultModal">
     <div class="modal-card" id="resultCard">
       <div class="confetti-emoji" id="resultEmoji">🎉</div>
@@ -484,7 +447,6 @@
     </div>
   </div>
 
-  <!-- ===================== FOOTER / LEGAL ===================== -->
   <footer class="legal">
     <div class="legal-badges">
       <span class="badge warn">21+ ONLY</span>
@@ -534,8 +496,8 @@
     </details>
 
     <div class="brand-foot">
-      <p><strong>Prize Nova Entertainment LLC</strong> · Spin &amp; Win Promotion</p>
-      <p>© <span id="yearNow"></span> Prize Nova Entertainment LLC. All rights reserved.</p>
+      <p><strong>Prize Nova Entertainment LLC</strong> &middot; Spin &amp; Win Promotion</p>
+      <p>&copy; <span id="yearNow"></span> Prize Nova Entertainment LLC. All rights reserved.</p>
     </div>
   </footer>
 
@@ -549,7 +511,7 @@
      CONFIG — EDIT THESE BEFORE GOING LIVE
      ============================================================ */
   const CONFIG = {
-    // Paste the Google Apps Script Web App URL here (see apps-script.gs)
+    // Your deployed Google Apps Script Web App URL (must end in /exec)
     SHEET_WEBHOOK_URL: "https://script.google.com/macros/s/AKfycbwyl4du661ZAKDVoDcQxH9Q6OTgglHOJGTVaIheSzpIVZYs5TmDOetWbdivI238owweaw/exec",
 
     // Your official Facebook Page URL where users send their screenshot + code
@@ -558,32 +520,34 @@
     // Cooldown length between spins, in hours
     COOLDOWN_HOURS: 24,
 
-    /* Wheel prizes. "weight" sets relative chance — higher weight = more
-       likely. These do not need to add up to 100; they are normalized
-       automatically. The percentages you gave (90/30/80/70/20/90) are
-       used directly as weights below. NOTE: you did not give a chance
-       for "TRY AGAIN" — a weight of 100 is set as a placeholder. Edit
-       the number below to tune how often players see "Try Again". */
+    /* Logical prizes and their chance WEIGHTS. These are exactly the
+       numbers you gave (90/30/80/70/20/90); TRY AGAIN has no number
+       from you so a placeholder of 100 is used — edit it to tune how
+       often "Try Again" shows up. These weights are what actually
+       control the odds — they are completely separate from how many
+       times a label appears on the wheel face below. */
     WHEEL_ITEMS: [
-      { label: "TRY AGAIN",     weight: 100, color: "#2a0a5e" },
-      { label: "30% BONUS",     weight: 90,  color: "#ffcb2e" },
-      { label: "$5 Free Play",  weight: 70,  color: "#5b1fb8" },
-      { label: "40% BONUS",     weight: 30,  color: "#ffe79a" },
-      { label: "$2 Free Play",  weight: 90,  color: "#8b3fe0" },
-      { label: "25% BONUS",     weight: 80,  color: "#ffcb2e" },
-      { label: "$10 Free Play", weight: 20,  color: "#3a0ca3" }
-    ]
+      { key: "try",   label: "TRY AGAIN",     weight: 100 },
+      { key: "b30",   label: "30% BONUS",     weight: 90  },
+      { key: "f5",    label: "$5 Free Play",  weight: 70  },
+      { key: "b40",   label: "40% BONUS",     weight: 30  },
+      { key: "f2",    label: "$2 Free Play",  weight: 90  },
+      { key: "b25",   label: "25% BONUS",     weight: 80  },
+      { key: "f10",   label: "$10 Free Play", weight: 20  }
+    ],
+
+    /* The WHEEL FACE — purely cosmetic. Each entry references a "key"
+       above by repeating it, so the wheel looks big and full (12
+       slices) without changing real odds at all. Real odds always
+       come from WHEEL_ITEMS.weight above; this list only decides
+       what the wheel looks like and which duplicate slot a result
+       can land on. Add/remove/reorder freely. */
+    WHEEL_FACE: ["try","b30","f5","b40","f2","b25","try","f10","b30","f5","b25","f2"]
   };
 
-  /* ============================================================
-     STATE & STORAGE KEYS
-     Note: this uses localStorage on the visitor's own device, which
-     works once this file is hosted on your real domain. It will NOT
-     persist inside Claude's in-chat preview sandbox — that's a
-     preview-only limitation, not a bug in the code.
-     ============================================================ */
   const LS_KEY_NEXT_SPIN = "pn_next_spin_at";
   const LS_KEY_USERNAME  = "pn_username";
+  const LS_KEY_SOUND     = "pn_sound_on";
 
   const els = {
     form: document.getElementById("entryForm"),
@@ -598,6 +562,9 @@
     spinBtn: document.getElementById("spinBtn"),
     spinStatus: document.getElementById("spinStatus"),
     wheelSvg: document.getElementById("wheel"),
+    wheelStage: document.getElementById("wheelStage"),
+    wheelPointer: document.getElementById("wheelPointer"),
+    soundToggle: document.getElementById("soundToggle"),
     countdownTimer: document.getElementById("countdownTimer"),
     modal: document.getElementById("resultModal"),
     resultCard: document.getElementById("resultCard"),
@@ -616,33 +583,64 @@
 
   let currentRotation = 0;
   let spinning = false;
+  let soundOn = localStorage.getItem(LS_KEY_SOUND) !== "off";
+  let audioCtx = null;
+
+  function itemByKey(key){ return CONFIG.WHEEL_ITEMS.find(function(i){ return i.key === key; }); }
 
   /* ============================================================
-     BUILD THE WHEEL (SVG)
+     BUILD THE WHEEL FACE (SVG) — 12 cosmetic slices
      ============================================================ */
+  const YELLOW_SHADES = ["#ffcb2e","#ffe79a","#e0a300"];
+  const PURPLE_SHADES = ["#5b1fb8","#8b3fe0","#3a0ca3"];
+
+  function sliceColor(i){
+    return i % 2 === 0
+      ? YELLOW_SHADES[Math.floor(i/2) % YELLOW_SHADES.length]
+      : PURPLE_SHADES[Math.floor(i/2) % PURPLE_SHADES.length];
+  }
+
   function buildWheel(){
-    const n = CONFIG.WHEEL_ITEMS.length;
+    const face = CONFIG.WHEEL_FACE;
+    const n = face.length;
     const segAngle = 360 / n;
     const cx = 150, cy = 150, r = 145;
     let svg = "";
 
-    CONFIG.WHEEL_ITEMS.forEach((item, i) => {
-      const startAngle = i * segAngle - 90; // -90 so segment 0 starts at top
+    face.forEach(function(key, i){
+      const item = itemByKey(key);
+      const color = sliceColor(i);
+      const startAngle = i * segAngle - 90;
       const endAngle = startAngle + segAngle;
       const x1 = cx + r * Math.cos(deg2rad(startAngle));
       const y1 = cy + r * Math.sin(deg2rad(startAngle));
       const x2 = cx + r * Math.cos(deg2rad(endAngle));
       const y2 = cy + r * Math.sin(deg2rad(endAngle));
-      svg += `<path d="M${cx},${cy} L${x1.toFixed(2)},${y1.toFixed(2)} A${r},${r} 0 0 1 ${x2.toFixed(2)},${y2.toFixed(2)} Z" fill="${item.color}" stroke="#0c0518" stroke-width="2"/>`;
+      svg += '<path d="M' + cx + ',' + cy + ' L' + x1.toFixed(2) + ',' + y1.toFixed(2) +
+             ' A' + r + ',' + r + ' 0 0 1 ' + x2.toFixed(2) + ',' + y2.toFixed(2) +
+             ' Z" fill="' + color + '" stroke="#0c0518" stroke-width="2"/>';
 
       const midAngle = startAngle + segAngle / 2;
       const tx = cx + (r * 0.62) * Math.cos(deg2rad(midAngle));
       const ty = cy + (r * 0.62) * Math.sin(deg2rad(midAngle));
-      const textColor = isLight(item.color) ? "#2a1700" : "#f4eefc";
-      svg += `<text x="${tx.toFixed(2)}" y="${ty.toFixed(2)}" fill="${textColor}" font-size="13.5" font-weight="700" font-family="Space Grotesk, sans-serif" text-anchor="middle" dominant-baseline="middle" transform="rotate(${(midAngle+90).toFixed(2)} ${tx.toFixed(2)} ${ty.toFixed(2)})">${escapeXml(item.label)}</text>`;
+      const textColor = isLight(color) ? "#2a1700" : "#f4eefc";
+      const lines = wrapLabel(item.label);
+      svg += '<text x="' + tx.toFixed(2) + '" y="' + ty.toFixed(2) + '" fill="' + textColor +
+             '" font-size="12" font-weight="700" font-family="Space Grotesk, sans-serif" text-anchor="middle" dominant-baseline="middle" transform="rotate(' + (midAngle+90).toFixed(2) + ' ' + tx.toFixed(2) + ' ' + ty.toFixed(2) + ')">';
+      lines.forEach(function(line, li){
+        svg += '<tspan x="' + tx.toFixed(2) + '" dy="' + (li===0 ? -((lines.length-1)*6.5) : 13) + '">' + escapeXml(line) + '</tspan>';
+      });
+      svg += '</text>';
     });
 
     els.wheelSvg.innerHTML = svg;
+  }
+  function wrapLabel(label){
+    if(label.length <= 9) return [label];
+    const parts = label.split(" ");
+    if(parts.length === 1) return [label];
+    const mid = Math.ceil(parts.length/2);
+    return [parts.slice(0,mid).join(" "), parts.slice(mid).join(" ")];
   }
   function deg2rad(d){ return (d * Math.PI) / 180; }
   function isLight(hex){
@@ -653,35 +651,109 @@
   function escapeXml(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
   /* ============================================================
-     WEIGHTED RANDOM PICK
+     WEIGHTED RANDOM PICK (real odds — unaffected by wheel art)
      ============================================================ */
-  function pickPrizeIndex(){
-    const total = CONFIG.WHEEL_ITEMS.reduce((s,i)=>s+i.weight,0);
+  function pickPrize(){
+    const total = CONFIG.WHEEL_ITEMS.reduce(function(s,i){ return s+i.weight; },0);
     let roll = Math.random() * total;
     for(let i=0;i<CONFIG.WHEEL_ITEMS.length;i++){
       roll -= CONFIG.WHEEL_ITEMS[i].weight;
-      if(roll <= 0) return i;
+      if(roll <= 0) return CONFIG.WHEEL_ITEMS[i];
     }
-    return CONFIG.WHEEL_ITEMS.length - 1;
+    return CONFIG.WHEEL_ITEMS[CONFIG.WHEEL_ITEMS.length - 1];
+  }
+
+  function pickFaceSlotForKey(key){
+    const slots = [];
+    CONFIG.WHEEL_FACE.forEach(function(k,i){ if(k === key) slots.push(i); });
+    return slots[Math.floor(Math.random()*slots.length)];
   }
 
   /* ============================================================
-     SPIN ANIMATION
+     AUDIO (synthesized — no external files)
      ============================================================ */
-  function spinWheelTo(index){
-    const n = CONFIG.WHEEL_ITEMS.length;
-    const segAngle = 360 / n;
-    const centerAngle = index * segAngle + segAngle / 2;
-    const jitter = (Math.random() - 0.5) * segAngle * 0.6;
-    const fullSpins = 6 + Math.floor(Math.random() * 2); // 6-7 full spins
-    const targetWithinCircle = (360 - centerAngle + jitter + 360) % 360;
+  function ensureAudio(){
+    if(!audioCtx){
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if(AC) audioCtx = new AC();
+    }
+    if(audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+    return audioCtx;
+  }
+  function playTick(){
+    if(!soundOn) return;
+    const ctx = ensureAudio(); if(!ctx) return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = "square";
+    osc.frequency.value = 950;
+    gain.gain.setValueAtTime(0.06, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.045);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(); osc.stop(ctx.currentTime + 0.05);
+  }
+  function playChime(isWin){
+    if(!soundOn) return;
+    const ctx = ensureAudio(); if(!ctx) return;
+    const notes = isWin ? [523.25, 659.25, 784.0] : [392.0, 311.13];
+    notes.forEach(function(freq, i){
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "triangle";
+      osc.frequency.value = freq;
+      const t0 = ctx.currentTime + i * 0.13;
+      gain.gain.setValueAtTime(0.0001, t0);
+      gain.gain.linearRampToValueAtTime(0.09, t0 + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, t0 + 0.32);
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.start(t0); osc.stop(t0 + 0.34);
+    });
+  }
+  function scheduleSpinTicks(totalMs){
+    const startDelay = 55, endDelay = 270, steps = 30;
+    let t = 0;
+    for(let i=0;i<steps;i++){
+      const progress = i/(steps-1);
+      const delay = startDelay + (endDelay-startDelay) * Math.pow(progress, 1.7);
+      t += delay;
+      if(t < totalMs) setTimeout(playTick, t);
+    }
+  }
+  els.soundToggle.addEventListener("click", function(){
+    soundOn = !soundOn;
+    localStorage.setItem(LS_KEY_SOUND, soundOn ? "on" : "off");
+    els.soundToggle.textContent = soundOn ? "🔊" : "🔇";
+    if(soundOn) ensureAudio();
+  });
+  els.soundToggle.textContent = soundOn ? "🔊" : "🔇";
 
-    // ensure rotation always moves forward from currentRotation
+  /* ============================================================
+     SPIN ANIMATION (wind-up + long dramatic deceleration)
+     ============================================================ */
+  function spinWheelToSlot(slotIndex){
+    const n = CONFIG.WHEEL_FACE.length;
+    const segAngle = 360 / n;
+    const centerAngle = slotIndex * segAngle + segAngle / 2;
+    const jitter = (Math.random() - 0.5) * segAngle * 0.55;
+    const fullSpins = 7 + Math.floor(Math.random() * 2);
+    const targetWithinCircle = (360 - centerAngle + jitter + 360) % 360;
     const baseFull = Math.floor(currentRotation / 360);
     const finalRotation = (baseFull + fullSpins) * 360 + targetWithinCircle;
 
-    currentRotation = finalRotation;
-    els.wheelSvg.style.transform = `rotate(${finalRotation}deg)`;
+    const SPIN_MS = 5200;
+
+    // wind-up: small backward flick for anticipation
+    els.wheelSvg.style.transition = "transform .28s cubic-bezier(.5,0,.8,.5)";
+    els.wheelSvg.style.transform = "rotate(" + (currentRotation - 12) + "deg)";
+
+    setTimeout(function(){
+      els.wheelSvg.style.transition = "transform " + (SPIN_MS/1000) + "s cubic-bezier(.12,.85,.18,1)";
+      els.wheelSvg.style.transform = "rotate(" + finalRotation + "deg)";
+      currentRotation = finalRotation;
+      scheduleSpinTicks(SPIN_MS);
+    }, 300);
+
+    return SPIN_MS + 300;
   }
 
   /* ============================================================
@@ -690,7 +762,7 @@
   function generateCode(){
     const a = Date.now().toString(36).toUpperCase();
     const b = Math.random().toString(36).substring(2,7).toUpperCase();
-    return `PN-${a}-${b}`;
+    return "PN-" + a + "-" + b;
   }
   function liveTimestamp(){
     const d = new Date();
@@ -698,19 +770,25 @@
   }
 
   /* ============================================================
-     SHEET LOGGING (fire-and-forget POST to your Apps Script)
+     SHEET LOGGING
+     Uses a simple GET request (query string) instead of POST.
+     Apps Script web apps respond to POST with a redirect, and many
+     browsers silently drop the POST body on that redirect — rows
+     never appear even though no error shows in the console. GET
+     does not have that problem, so it is the reliable choice here.
      ============================================================ */
   function logToSheet(payload){
     if(!CONFIG.SHEET_WEBHOOK_URL || CONFIG.SHEET_WEBHOOK_URL.indexOf("PASTE_YOUR") === 0){
       console.warn("Sheet webhook URL not configured yet — skipping log:", payload);
       return;
     }
-    fetch(CONFIG.SHEET_WEBHOOK_URL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify(payload)
-    }).catch(err => console.warn("Sheet log failed:", err));
+    const qs = Object.keys(payload).map(function(k){
+      return encodeURIComponent(k) + "=" + encodeURIComponent(payload[k]);
+    }).join("&");
+    const url = CONFIG.SHEET_WEBHOOK_URL + "?" + qs;
+    fetch(url, { method: "GET", mode: "no-cors" }).catch(function(err){
+      console.warn("Sheet log failed:", err);
+    });
   }
 
   /* ============================================================
@@ -720,12 +798,8 @@
     const v = localStorage.getItem(LS_KEY_NEXT_SPIN);
     return v ? parseInt(v,10) : 0;
   }
-  function setNextSpinAt(ts){
-    localStorage.setItem(LS_KEY_NEXT_SPIN, String(ts));
-  }
-  function isOnCooldown(){
-    return Date.now() < getNextSpinAt();
-  }
+  function setNextSpinAt(ts){ localStorage.setItem(LS_KEY_NEXT_SPIN, String(ts)); }
+  function isOnCooldown(){ return Date.now() < getNextSpinAt(); }
   let countdownInterval = null;
   function startCountdown(){
     showStep("cooldown");
@@ -740,26 +814,20 @@
       const h = Math.floor(remaining / 3600000);
       const m = Math.floor((remaining % 3600000) / 60000);
       const s = Math.floor((remaining % 60000) / 1000);
-      els.countdownTimer.textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
+      els.countdownTimer.textContent = pad(h) + ":" + pad(m) + ":" + pad(s);
     }
     tick();
     countdownInterval = setInterval(tick, 1000);
   }
   function pad(n){ return String(n).padStart(2,"0"); }
 
-  /* ============================================================
-     STEP SWITCHING
-     ============================================================ */
   function showStep(name){
-    [els.stepForm, els.stepWheel, els.stepCooldown].forEach(s => s.classList.remove("active"));
+    [els.stepForm, els.stepWheel, els.stepCooldown].forEach(function(s){ s.classList.remove("active"); });
     if(name === "form") els.stepForm.classList.add("active");
     if(name === "wheel") els.stepWheel.classList.add("active");
     if(name === "cooldown") els.stepCooldown.classList.add("active");
   }
 
-  /* ============================================================
-     FORM VALIDATION
-     ============================================================ */
   function validateForm(){
     let ok = true;
     const username = els.username.value.trim();
@@ -767,16 +835,12 @@
 
     if(username.length < 2 || username.length > 40){
       els.fieldUsername.classList.add("invalid"); ok = false;
-    } else {
-      els.fieldUsername.classList.remove("invalid");
-    }
+    } else { els.fieldUsername.classList.remove("invalid"); }
 
     const digits = mobile.replace(/[^\d]/g,"");
     if(digits.length < 7 || digits.length > 15){
       els.fieldMobile.classList.add("invalid"); ok = false;
-    } else {
-      els.fieldMobile.classList.remove("invalid");
-    }
+    } else { els.fieldMobile.classList.remove("invalid"); }
     return ok;
   }
 
@@ -789,40 +853,40 @@
     localStorage.setItem(LS_KEY_USERNAME, username);
     els.helloName.textContent = username;
 
-    logToSheet({
-      type: "signup",
-      username: username,
-      mobile: mobile,
-      timestamp: liveTimestamp()
-    });
+    logToSheet({ type: "signup", username: username, mobile: mobile, timestamp: liveTimestamp() });
 
-    if(isOnCooldown()){
-      startCountdown();
-    } else {
-      showStep("wheel");
-    }
+    if(isOnCooldown()){ startCountdown(); } else { showStep("wheel"); }
   });
 
-  /* ============================================================
-     SPIN BUTTON
-     ============================================================ */
+  const SUSPENSE_MESSAGES = ["Spinning...", "The nebula is deciding...", "Almost there...", "Hold tight..."];
   els.spinBtn.addEventListener("click", function(){
     if(spinning) return;
     if(isOnCooldown()){ startCountdown(); return; }
 
+    ensureAudio();
     spinning = true;
     els.spinBtn.disabled = true;
-    els.spinStatus.textContent = "Spinning… good luck!";
+    els.wheelStage.classList.add("spinning");
+    let msgIdx = 0;
+    els.spinStatus.textContent = SUSPENSE_MESSAGES[0];
+    const msgInterval = setInterval(function(){
+      msgIdx = (msgIdx+1) % SUSPENSE_MESSAGES.length;
+      els.spinStatus.textContent = SUSPENSE_MESSAGES[msgIdx];
+    }, 1300);
 
-    const index = pickPrizeIndex();
-    spinWheelTo(index);
+    const prize = pickPrize();
+    const slot = pickFaceSlotForKey(prize.key);
+    const totalDuration = spinWheelToSlot(slot);
 
     setTimeout(function(){
+      clearInterval(msgInterval);
       spinning = false;
       els.spinBtn.disabled = false;
+      els.wheelStage.classList.remove("spinning");
+      els.wheelPointer.classList.add("bounce");
+      setTimeout(function(){ els.wheelPointer.classList.remove("bounce"); }, 650);
 
-      const prize = CONFIG.WHEEL_ITEMS[index];
-      const isTryAgain = prize.label === "TRY AGAIN";
+      const isTryAgain = prize.key === "try";
       const code = generateCode();
       const ts = liveTimestamp();
       const nextSpinAt = Date.now() + CONFIG.COOLDOWN_HOURS * 3600000;
@@ -837,14 +901,13 @@
         timestamp: ts
       });
 
+      playChime(!isTryAgain);
       showResultModal(prize.label, code, ts, isTryAgain);
+      if(!isTryAgain) spawnConfetti();
       els.spinStatus.textContent = "Come back in 24 hours for your next spin.";
-    }, 4300);
+    }, totalDuration + 60);
   });
 
-  /* ============================================================
-     RESULT MODAL
-     ============================================================ */
   function showResultModal(label, code, ts, isTryAgain){
     els.prizeValue.textContent = label;
     els.prizeCode.textContent = code;
@@ -856,6 +919,34 @@
     els.fbClaimBtn.style.display = isTryAgain ? "none" : "block";
     document.getElementById("codeBlock").style.display = isTryAgain ? "none" : "block";
     els.modal.classList.add("show");
+  }
+
+  function spawnConfetti(){
+    const colors = ["#ffcb2e","#8b3fe0","#ffe79a","#5b1fb8","#ffffff"];
+    const card = els.resultCard;
+    for(let i=0;i<26;i++){
+      const piece = document.createElement("div");
+      piece.className = "confetti-piece";
+      const size = 5 + Math.random()*5;
+      piece.style.width = size + "px";
+      piece.style.height = (size*0.4) + "px";
+      piece.style.left = (Math.random()*100) + "%";
+      piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+      const duration = 1.6 + Math.random()*1.2;
+      const delay = Math.random()*0.4;
+      const rotateStart = Math.random()*360;
+      piece.style.transform = "rotate(" + rotateStart + "deg)";
+      piece.style.transition = "transform " + duration + "s ease-in, top " + duration + "s ease-in, opacity " + duration + "s ease-in";
+      card.appendChild(piece);
+      requestAnimationFrame(function(){
+        setTimeout(function(){
+          piece.style.top = (60 + Math.random()*30) + "%";
+          piece.style.transform = "rotate(" + (rotateStart + 360 + Math.random()*360) + "deg)";
+          piece.style.opacity = "0";
+        }, delay*1000);
+      });
+      setTimeout(function(){ if(piece.parentNode) piece.parentNode.removeChild(piece); }, (duration+delay+0.3)*1000);
+    }
   }
 
   els.closeModalBtn.addEventListener("click", function(){
@@ -877,9 +968,6 @@
     });
   });
 
-  /* ============================================================
-     INIT
-     ============================================================ */
   buildWheel();
   const savedName = localStorage.getItem(LS_KEY_USERNAME);
   if(savedName) els.helloName.textContent = savedName;

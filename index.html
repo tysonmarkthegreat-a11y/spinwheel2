@@ -184,7 +184,13 @@
   /* ===================== WHEEL (bigger + more alive) ===================== */
   .wheel-stage{
     position:relative; width:min(88vw, 380px); aspect-ratio:1/1; margin: 6px auto 18px;
+    cursor:pointer;
+    transition: transform .2s ease;
   }
+  .wheel-stage:hover .wheel-ring{ box-shadow: 0 0 0 4px rgba(255,255,255,0.1), 0 0 34px rgba(255,203,46,0.35), 0 25px 50px rgba(0,0,0,0.55); }
+  .wheel-stage:active{ transform: scale(0.985); }
+  .wheel-stage.spinning{ cursor:default; }
+  .wheel-stage.spinning:active{ transform:none; }
   .wheel-stage.spinning .wheel-glow{ animation: glowPulseFast 0.6s ease-in-out infinite; }
   .sound-toggle{
     position:absolute; top:2px; right:2px; z-index:4;
@@ -226,6 +232,7 @@
     background: conic-gradient(from 0deg, var(--nova-yellow), var(--nebula-violet), var(--nova-yellow));
     padding:10px;
     box-shadow: 0 0 0 4px rgba(255,255,255,0.06), 0 25px 50px rgba(0,0,0,0.55);
+    transition: box-shadow .25s ease;
   }
   .wheel-inner-frame{ width:100%; height:100%; border-radius:50%; background: var(--void-deep); padding:6px; }
   #wheel{
@@ -520,29 +527,39 @@
     // Cooldown length between spins, in hours
     COOLDOWN_HOURS: 24,
 
-    /* Logical prizes and their chance WEIGHTS. These are exactly the
-       numbers you gave (90/30/80/70/20/90); TRY AGAIN has no number
-       from you so a placeholder of 100 is used — edit it to tune how
-       often "Try Again" shows up. These weights are what actually
-       control the odds — they are completely separate from how many
-       times a label appears on the wheel face below. */
+    /* Logical prizes and their chance WEIGHTS, taken directly from the
+       "X out of 10" odds you gave (multiplied by 10 to keep them on
+       the same 0-100 scale the rest of the config already uses):
+         TRY AGAIN     9/10 -> 90
+         25% BONUS     3/10 -> 30
+         $3 Free Play  5/10 -> 50
+         26% BONUS     3/10 -> 30
+         $2 Free Play  8/10 -> 80
+         22% BONUS     8/10 -> 80
+         $5 Free Play  2/10 -> 20
+       These weights are what actually control the odds — they are
+       completely separate from how many times a slice appears on the
+       wheel face below (the wheel face no longer even shows labels). */
     WHEEL_ITEMS: [
-      { key: "try",   label: "TRY AGAIN",     weight: 100 },
-      { key: "b30",   label: "25% BONUS",     weight: 10  },
-      { key: "f5",    label: "$3 Free Play",  weight: 40  },
-      { key: "b40",   label: "40% BONUS",     weight: 30  },
-      { key: "f2",    label: "$2 Free Play",  weight: 90  },
-      { key: "b25",   label: "22% BONUS",     weight: 20  },
-      { key: "f10",   label: "$10 Free Play", weight: 05  }
+      { key: "try",  label: "TRY AGAIN",     weight: 90 },
+      { key: "b25",  label: "25% BONUS",     weight: 30 },
+      { key: "f3",   label: "$3 Free Play",  weight: 50 },
+      { key: "b26",  label: "26% BONUS",     weight: 30 },
+      { key: "f2",   label: "$2 Free Play",  weight: 80 },
+      { key: "b22",  label: "22% BONUS",     weight: 80 },
+      { key: "f5",   label: "$5 Free Play",  weight: 20 }
     ],
 
     /* The WHEEL FACE — purely cosmetic. Each entry references a "key"
-       above by repeating it, so the wheel looks big and full (12
+       above by repeating it, so the wheel looks big and full (14
        slices) without changing real odds at all. Real odds always
-       come from WHEEL_ITEMS.weight above; this list only decides
-       what the wheel looks like and which duplicate slot a result
-       can land on. Add/remove/reorder freely. */
-    WHEEL_FACE: ["try","b30","f5","b40","f2","b25","try","f10","b30","f5","b25","f2"]
+       come from WHEEL_ITEMS.weight above; this list only decides how
+       many colored slices the wheel has and which duplicate slot a
+       result can land on. The wheel itself is deliberately blank —
+       no labels are drawn on it, so the reward is only revealed in
+       the result popup after the spin finishes. Add/remove/reorder
+       freely, it just has to reference keys that exist above. */
+    WHEEL_FACE: ["try","b25","f3","b26","f2","b22","f5","try","b25","f3","b26","f2","b22","f5"]
   };
 
   const LS_KEY_NEXT_SPIN = "pn_next_spin_at";
@@ -600,6 +617,11 @@
       : PURPLE_SHADES[Math.floor(i/2) % PURPLE_SHADES.length];
   }
 
+  /* The wheel face is intentionally blank — no reward labels are ever
+     drawn on it. It's just alternating colored slices with a rim of
+     casino-style pegs/gems, like a real prize wheel. The suspense of
+     not knowing which slice means what is the whole point; the actual
+     reward is only revealed in the result popup once the spin lands. */
   function buildWheel(){
     const face = CONFIG.WHEEL_FACE;
     const n = face.length;
@@ -607,8 +629,14 @@
     const cx = 150, cy = 150, r = 145;
     let svg = "";
 
+    svg += '<defs>' +
+             '<radialGradient id="sliceSheen" cx="50%" cy="50%" r="65%">' +
+               '<stop offset="0%" stop-color="#ffffff" stop-opacity="0.16"/>' +
+               '<stop offset="70%" stop-color="#ffffff" stop-opacity="0"/>' +
+             '</radialGradient>' +
+           '</defs>';
+
     face.forEach(function(key, i){
-      const item = itemByKey(key);
       const color = sliceColor(i);
       const startAngle = i * segAngle - 90;
       const endAngle = startAngle + segAngle;
@@ -620,35 +648,23 @@
              ' A' + r + ',' + r + ' 0 0 1 ' + x2.toFixed(2) + ',' + y2.toFixed(2) +
              ' Z" fill="' + color + '" stroke="#0c0518" stroke-width="2"/>';
 
+      // thin gold divider line between slices for a cleaner casino rim
+      svg += '<line x1="' + cx + '" y1="' + cy + '" x2="' + x1.toFixed(2) + '" y2="' + y1.toFixed(2) +
+             '" stroke="rgba(255,203,46,0.35)" stroke-width="1"/>';
+
+      // decorative peg near the rim of each slice (no text, purely ornamental)
       const midAngle = startAngle + segAngle / 2;
-      const tx = cx + (r * 0.62) * Math.cos(deg2rad(midAngle));
-      const ty = cy + (r * 0.62) * Math.sin(deg2rad(midAngle));
-      const textColor = isLight(color) ? "#2a1700" : "#f4eefc";
-      const lines = wrapLabel(item.label);
-      svg += '<text x="' + tx.toFixed(2) + '" y="' + ty.toFixed(2) + '" fill="' + textColor +
-             '" font-size="12" font-weight="700" font-family="Space Grotesk, sans-serif" text-anchor="middle" dominant-baseline="middle" transform="rotate(' + (midAngle+90).toFixed(2) + ' ' + tx.toFixed(2) + ' ' + ty.toFixed(2) + ')">';
-      lines.forEach(function(line, li){
-        svg += '<tspan x="' + tx.toFixed(2) + '" dy="' + (li===0 ? -((lines.length-1)*6.5) : 13) + '">' + escapeXml(line) + '</tspan>';
-      });
-      svg += '</text>';
+      const px = cx + (r * 0.88) * Math.cos(deg2rad(midAngle));
+      const py = cy + (r * 0.88) * Math.sin(deg2rad(midAngle));
+      svg += '<circle cx="' + px.toFixed(2) + '" cy="' + py.toFixed(2) + '" r="4.5" fill="rgba(255,255,255,0.85)" stroke="#0c0518" stroke-width="1"/>';
     });
+
+    // overall sheen so the wheel reads as glossy/3D like a real casino wheel
+    svg += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="url(#sliceSheen)"/>';
 
     els.wheelSvg.innerHTML = svg;
   }
-  function wrapLabel(label){
-    if(label.length <= 9) return [label];
-    const parts = label.split(" ");
-    if(parts.length === 1) return [label];
-    const mid = Math.ceil(parts.length/2);
-    return [parts.slice(0,mid).join(" "), parts.slice(mid).join(" ")];
-  }
   function deg2rad(d){ return (d * Math.PI) / 180; }
-  function isLight(hex){
-    const c = hex.replace("#","");
-    const r = parseInt(c.substr(0,2),16), g = parseInt(c.substr(2,2),16), b = parseInt(c.substr(4,2),16);
-    return (0.299*r + 0.587*g + 0.114*b) > 170;
-  }
-  function escapeXml(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
   /* ============================================================
      WEIGHTED RANDOM PICK (real odds — unaffected by wheel art)
@@ -859,7 +875,7 @@
   });
 
   const SUSPENSE_MESSAGES = ["Spinning...", "The nebula is deciding...", "Almost there...", "Hold tight..."];
-  els.spinBtn.addEventListener("click", function(){
+  function startSpin(){
     if(spinning) return;
     if(isOnCooldown()){ startCountdown(); return; }
 
@@ -906,6 +922,15 @@
       if(!isTryAgain) spawnConfetti();
       els.spinStatus.textContent = "Come back in 24 hours for your next spin.";
     }, totalDuration + 60);
+  }
+
+  els.spinBtn.addEventListener("click", startSpin);
+
+  // Casino wheels are tappable themselves — clicking/tapping the wheel
+  // (anywhere except the sound toggle) spins it too.
+  els.wheelStage.addEventListener("click", function(e){
+    if(e.target.closest && e.target.closest("#soundToggle")) return;
+    startSpin();
   });
 
   function showResultModal(label, code, ts, isTryAgain){

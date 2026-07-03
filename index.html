@@ -531,23 +531,23 @@
        "X out of 10" odds you gave (multiplied by 10 to keep them on
        the same 0-100 scale the rest of the config already uses):
          TRY AGAIN     9/10 -> 90
-         25% BONUS     3/10 -> 30
-         $3 Free Play  5/10 -> 50
-         26% BONUS     3/10 -> 30
-         $2 Free Play  8/10 -> 80
-         22% BONUS     8/10 -> 80
-         $5 Free Play  2/10 -> 20
+         20% BONUS     3/10 -> 30
+         $2 Free Play  5/10 -> 50
+         20% BONUS     3/10 -> 30
+         $3 Free Play  8/10 -> 80
+         20% BONUS     8/10 -> 80
+         $2 Free Play  2/10 -> 20
        These weights are what actually control the odds — they are
        completely separate from how many times a slice appears on the
        wheel face below (the wheel face no longer even shows labels). */
     WHEEL_ITEMS: [
       { key: "try",  label: "TRY AGAIN",     weight: 90 },
-      { key: "b25",  label: "25% BONUS",     weight: 30 },
-      { key: "f3",   label: "$3 Free Play",  weight: 50 },
-      { key: "b26",  label: "26% BONUS",     weight: 30 },
-      { key: "f2",   label: "$2 Free Play",  weight: 80 },
-      { key: "b22",  label: "22% BONUS",     weight: 80 },
-      { key: "f5",   label: "$5 Free Play",  weight: 20 }
+      { key: "b25",  label: "20% BONUS",     weight: 30 },
+      { key: "f3",   label: "$2 Free Play",  weight: 50 },
+      { key: "b26",  label: "20% BONUS",     weight: 30 },
+      { key: "f2",   label: "$3 Free Play",  weight: 80 },
+      { key: "b22",  label: "20% BONUS",     weight: 80 },
+      { key: "f5",   label: "$2 Free Play",  weight: 20 }
     ],
 
     /* The WHEEL FACE — purely cosmetic. Each entry references a "key"

@@ -1,10 +1,225 @@
-<div class="card">
-  <section class="step active">
-    <div class="countdown-box">
-      <h3>Promotion paused</h3>
-      <p>The Prize Nova Spin Wheel will be paused until July 20th, as we are currently running a $1,500 Cash Prize Competition.
-For further details, please contact our agents via our Facebook page.
-Thank you for your understanding!</p>
-    </div>
-  </section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prize Nova Notice</title>
+<style>
+  :root{
+    --void: #0a0518;
+    --void-2: #150a2e;
+    --nebula-violet: #6b2fb3;
+    --nebula-magenta: #a83fd6;
+    --star-gold: #ffcc33;
+    --star-gold-soft: #ffe08a;
+    --text-soft: #e8def8;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html,body{
+    height:100%;
+    background: var(--void);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    overflow:hidden;
+  }
+
+  .sky{
+    position:relative;
+    width:100%;
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(168,63,214,0.35), transparent 55%),
+      radial-gradient(ellipse at 80% 70%, rgba(107,47,179,0.4), transparent 55%),
+      radial-gradient(ellipse at 50% 100%, rgba(255,204,51,0.08), transparent 60%),
+      linear-gradient(180deg, var(--void) 0%, var(--void-2) 100%);
+  }
+
+  /* drifting nebula clouds */
+  .cloud{
+    position:absolute;
+    border-radius:50%;
+    filter: blur(60px);
+    opacity:0.55;
+    mix-blend-mode: screen;
+    animation: drift 22s ease-in-out infinite alternate;
+  }
+  .cloud.c1{
+    width:420px; height:420px;
+    top:-80px; left:-100px;
+    background: radial-gradient(circle, var(--nebula-magenta), transparent 70%);
+    animation-delay:0s;
+  }
+  .cloud.c2{
+    width:500px; height:500px;
+    bottom:-140px; right:-120px;
+    background: radial-gradient(circle, var(--nebula-violet), transparent 70%);
+    animation-delay:4s;
+  }
+  .cloud.c3{
+    width:300px; height:300px;
+    top:40%; left:60%;
+    background: radial-gradient(circle, var(--star-gold), transparent 75%);
+    opacity:0.15;
+    animation-delay:8s;
+  }
+
+  @keyframes drift{
+    0%   { transform: translate(0,0) scale(1); }
+    50%  { transform: translate(30px,-20px) scale(1.08); }
+    100% { transform: translate(-20px,25px) scale(0.96); }
+  }
+
+  /* stars */
+  .stars{
+    position:absolute;
+    inset:0;
+    background-image:
+      radial-gradient(1.5px 1.5px at 10% 20%, #fff, transparent),
+      radial-gradient(1px 1px at 30% 80%, #fff, transparent),
+      radial-gradient(2px 2px at 50% 15%, var(--star-gold-soft), transparent),
+      radial-gradient(1px 1px at 70% 60%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 85% 25%, #fff, transparent),
+      radial-gradient(1px 1px at 90% 80%, var(--star-gold-soft), transparent),
+      radial-gradient(1.5px 1.5px at 15% 65%, #fff, transparent),
+      radial-gradient(1px 1px at 40% 45%, #fff, transparent),
+      radial-gradient(1px 1px at 60% 90%, #fff, transparent),
+      radial-gradient(2px 2px at 25% 40%, var(--star-gold-soft), transparent);
+    background-repeat: repeat;
+    background-size: 100% 100%;
+    animation: twinkle 4s ease-in-out infinite alternate;
+  }
+
+  @keyframes twinkle{
+    0%   { opacity:0.5; }
+    100% { opacity:1; }
+  }
+
+  /* notice card */
+  .notice{
+    position:relative;
+    z-index:5;
+    max-width:600px;
+    width:90%;
+    padding:48px 40px;
+    text-align:center;
+    background: linear-gradient(160deg, rgba(21,10,46,0.75), rgba(10,5,24,0.85));
+    border: 1px solid rgba(255,204,51,0.35);
+    border-radius:20px;
+    box-shadow:
+      0 0 40px rgba(168,63,214,0.45),
+      0 0 90px rgba(107,47,179,0.3),
+      inset 0 0 30px rgba(255,204,51,0.05);
+    backdrop-filter: blur(6px);
+    animation: floatCard 6s ease-in-out infinite;
+  }
+
+  @keyframes floatCard{
+    0%,100% { transform: translateY(0px); }
+    50%     { transform: translateY(-10px); }
+  }
+
+  .eyebrow{
+    display:inline-block;
+    font-size:12px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    color: var(--star-gold);
+    border:1px solid rgba(255,204,51,0.4);
+    padding:5px 14px;
+    border-radius:999px;
+    margin-bottom:22px;
+    background: rgba(255,204,51,0.06);
+  }
+
+  h1{
+    font-size:30px;
+    letter-spacing:1px;
+    background: linear-gradient(90deg, var(--star-gold-soft), var(--star-gold), var(--nebula-magenta));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    margin-bottom:18px;
+    line-height:1.3;
+  }
+
+  p{
+    color: var(--text-soft);
+    font-size:16px;
+    line-height:1.7;
+    margin-bottom:14px;
+  }
+
+  .highlight{
+    color: var(--star-gold);
+    font-weight:600;
+  }
+
+  .date{
+    color:#d8b6ff;
+    font-weight:600;
+  }
+
+  .divider{
+    width:60px;
+    height:2px;
+    margin:22px auto;
+    background: linear-gradient(90deg, transparent, var(--star-gold), transparent);
+  }
+
+  .cta{
+    display:inline-block;
+    margin-top:10px;
+    padding:12px 28px;
+    border-radius:999px;
+    background: linear-gradient(90deg, var(--nebula-violet), var(--nebula-magenta));
+    color:#fff;
+    text-decoration:none;
+    font-weight:600;
+    font-size:14px;
+    letter-spacing:0.5px;
+    box-shadow: 0 0 20px rgba(168,63,214,0.6);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .cta:hover{
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 0 30px rgba(255,204,51,0.5);
+  }
+
+  .thanks{
+    margin-top:20px;
+    font-size:13px;
+    color: rgba(232,222,248,0.6);
+  }
+
+  @media (max-width:480px){
+    .notice{ padding:36px 24px; }
+    h1{ font-size:24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sky">
+  <div class="cloud c1"></div>
+  <div class="cloud c2"></div>
+  <div class="cloud c3"></div>
+  <div class="stars"></div>
+
+  <div class="notice">
+    <span class="eyebrow">Notice</span>
+    <h1>Prize Nova Spin Wheel</h1>
+    <p>The Spin Wheel will be <span class="highlight">paused</span> until <span class="date">July 20th</span>, as we are currently running a</p>
+    <h1 style="font-size:26px;">$1,500 Cash Prize Competition</h1>
+    <div class="divider"></div>
+    <p>For further details, please contact our agents via our Facebook page.</p>
+    <a href="https://www.facebook.com/PrizeNova" class="cta">Visit Our Facebook Page</a>
+    <p class="thanks">Thank you for your understanding ✦</p>
+  </div>
 </div>
+
+</body>
+</html>
